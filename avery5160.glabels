@@ -10,9 +10,11 @@
   </Template>
   <Objects id="0" rotate="False">
     <Object-barcode x="0.0863243in" y="0.0867488in" w="0.832in" h="0.832in" backend="libqrencode" style="IEC18004" text="False" checksum="True" color="0x000000ff" field="qr" format="1" a0="1" a1="0" a2="0" a3="1" a4="0" a5="0"/>
-    <Object-text x="0.952419in" y="0.276822in" w="1.566in" h="0.514034in" justify="Center" valign="Center" auto_shrink="True" a0="1" a1="0" a2="0" a3="1" a4="0" a5="0">
+    <Object-text x="0.952419in" y="0.126227in" w="1.566in" h="0.76473in" justify="Center" valign="Center" auto_shrink="False" a0="1" a1="0" a2="0" a3="1" a4="0" a5="0">
       <Span color="0x000000ff" font_family="Noto Sans Tagbanwa" font_size="15" font_weight="Regular" font_italic="False" line_spacing="1">
         <Field name="bar"/>
+        <NL/>
+        <Field name="description"/>
       </Span>
     </Object-text>
   </Objects>
