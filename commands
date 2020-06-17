@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function lplabel () {
+	# This assumess the cups version of lpr.
+	# You may want to change the input slot.
+	lpr -o sides=one-sided -o Ink=MONO -o InputSlot=Rear "$@"
+}
+
+function mklabel () {
+	#if you have a patched version of glabels (https://github.com/jimevins/glabels/pull/65) use it.
+	~/glabels-3.4.0/debian/tmp/usr/bin/glabels-3-batch -C -i - -o /dev/stdout avery5160.glabels 2>/dev/null
+	#otherwise strip extra messages from stdout.
+	#glabels-3-batch -C -i - -o /dev/stdout item.glabels |sed -n '/%PDF-1.5/,/%%EOF/p'
+}
+
