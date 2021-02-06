@@ -3,7 +3,7 @@
 use strict;
 use Inventory::DBI;
 
-my $root='http://qr.example.com';
+my $root='${protocol}://${root}';
 
 dbconnect() unless $Inventory::DBI::dbh;
 
