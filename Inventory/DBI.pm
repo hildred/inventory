@@ -38,13 +38,10 @@ our (@ISA, @EXPORT);
 	dbconnect
 	describe_suplemental
 	get_all
-	get_search_natural
-	get_search_bool
-	get_search_expand
 	get_search
-	get_search_natural
 	get_search_bool
 	get_search_expand
+	get_search_natural
 	get_contents
 	get_object
 	get_suplemental
@@ -65,13 +62,10 @@ sub add_suplemental($$;%);
 sub dbconnect(;$);
 sub describe_suplemental(;$);
 sub get_all();
-sub get_search_natural($$$);
-sub get_search_bool($$$);
-sub get_search_expand($$$);
 sub get_search($$$$);
-sub get_search_natural($$$);
 sub get_search_bool($$$);
 sub get_search_expand($$$);
+sub get_search_natural($$$);
 sub get_contents(;$);
 sub get_object(;$);
 sub get_suplemental($;$);
@@ -204,6 +198,8 @@ sub get_search($$$$){
 	my $count=shift;
 
 	return get_search_natural($query, $start, $count);
+	return get_search_bool($query, $start, $count);
+	return get_search_expand($query, $start, $count);
 }
 
 {my $sth; sub get_contents(;$){
