@@ -1,0 +1,65 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Inventory::DBI;
+use Inventory::Config;
+
+my $root=$Iventory::Config::root;
+
+dbconnect() unless $Inventory::DBI::dbh;
+
+sub printline($;$$){
+	my $label=shift;
+	my $descr=shift;
+	my $times=shift;
+
+	my @object=get_object $label;
+
+	if(@object){
+		my($location, $type, $description, $secondaryid, $suplemental)=@object;
+		unless(defined $descr){
+			$descr=$description;
+		}elsif($descr==$description){
+			warn 'noop' if 0;
+		}else{
+			die 'description mismatch';
+		}
+		unless(defined $descr){
+			$descr='';
+			warn "null descr on $label";
+		}
+	}else{
+		if(defined $descr){
+			if($label =~ m!^ITEM/!){
+				new_object($label,$descr,'ITEM');
+			}elsif($label =~ m!^BOX/!){
+				new_object($label,$descr,'BOX');
+			}elsif($label =~ m!^SHELF/!){
+				new_object($label,$descr,'SHELF');
+			}elsif($label =~ m!^ROOM/!){
+				new_object($label,$descr,'ROOM');
+			}else{
+				warn "unknown label type";
+			}
+		}else{
+			$descr='';
+		}
+	}
+
+	$times=1 unless $times;
+	for(my $i=1;$i<=$times;$i++){
+		printf q("%s","%s/%1$s","%s")."\n",$label,$root,$descr;
+	}
+}
+
+print "bar,qr,description\n";
+while(<>){
+	chomp;
+	printline $_;
+}
+
+0;
+
+################ Documentation ################
+__END__

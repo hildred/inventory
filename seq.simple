@@ -3,8 +3,11 @@
 use strict;
 use warnings;
 use Inventory::DBI;
+use Inventory::Config;
 
-my $root='${protocol}://${root}';
+my $root=$Iventory::Config::root;
+my $lcount=$Iventory::Config::lcount;
+my %type=%Iventory::Config::type;
 
 dbconnect() unless $Inventory::DBI::dbh;
 
@@ -52,10 +55,39 @@ sub printline($;$$){
 	}
 }
 
+sub printitem($$;$$){
+	my $label=shift;
+	my $count=shift;
+	my $times=shift;
+	my $descr=shift;
+
+	printline $label.'/'.$count, $descr, $times;
+}
+
+sub printseq($@){
+	my $label=shift;
+	my $start=shift;
+	my $times=shift;
+	my $count=shift;
+
+	$times=1 unless $times;
+	$count=$lcount/$times unless $count;
+
+	foreach my $seq (0 ..$count-1){
+		printitem $label,$start++,$times;
+	}
+}
+
 print "bar,qr,description\n";
-while(<>){
-	chomp;
-	printline $_;
+@ARGV=sort keys %type unless @ARGV;
+foreach my $type (@ARGV) {
+	if($type=~m!/!){
+		#type/dups/count
+		my($a,@b)=split m!/!, $type;
+		printseq($a,$type{$a},@b);
+	}else{
+		printseq($type,$type{$type});
+	}
 }
 
 0;
