@@ -234,7 +234,7 @@ sub dbconnect(;$){
 		warn $dbh;
 	}else{
 		my $user=shift;
-		#Note: if you do not specify a user at all the corrent user is used. Would be nice if this was documented somewhere.
+		#Note: if you do not specify a user at all the current user is used. Would be nice if this was documented somewhere.
 		#if you are not using unix socket authentication change next lines as needed.
 		#$user='www-data' unless($user);
 		$dbh=DBI->connect(
